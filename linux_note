@@ -1,0 +1,184 @@
+chapter 5
+    date
+    cal     
+        cal 10 2018
+    bc
+    man
+        / ？：查询
+        1：可操作的命令或可执行文件
+        5：配置文件或者是某些文件的格式
+        8：系统管理员可用的命令
+    who
+    netstat -a
+    ps -aux
+    shutdown
+        shutdown -h now
+        shutdown -h +10/22:24 'message'
+    reboot/half/poweroff
+    init 0/3/5/6
+
+
+chapter 6
+    chgrp
+        chrgp groupname file
+    chown
+        chown ownername file
+    chmod
+        chmod 777 file
+        chmod u=rwx,go=rx file
+        chmod a+w file
+        chmod a-w file
+    文件权限
+    目录权限
+    绝对路径
+    相对路径
+
+chapter 7
+    .
+    ..
+    -
+    ~
+    ~account
+    mkdir
+        -p
+        -m
+    执行文件路径变量:PATH
+    ls
+        -a
+        -d
+        -l
+    cp
+        -a
+        -i
+        -p    连同文件属性复制
+        -r
+    rm
+        -i
+        -r
+        -f
+    mv
+        -f
+        -i
+        -u    若目标文件存在，且source比较新才更新
+    文件内容查阅
+        cat
+            -n
+        tac
+        nl
+        more    一页一页翻动，只可向下
+        less    一页一页翻动，可上可下
+        head
+            -n
+        tail
+            -n
+        od      非纯文本文件
+            -t  a/c/d/f/o/x
+    touch
+        mtime    内容改则改
+        ctime    权限和属性改则改
+        atime    内容被取用则改动
+        -a    仅修改访问时间
+        -c    修改文件时间，若不存在，则创建文件
+        -d    接欲修改的时间
+        -m    修改mtime
+        -t
+        ls默认显示mtime
+    默认访问权限
+        umask
+            文件： -rw-rw-rw- - umask
+            目录： drwxrwxrwx - umask
+    文件隐藏属性
+        chattr [+-=][属性] 文件或目录名称
+        lsattr
+        属性
+            a    一旦设置，文件只能增加数据，不能删除也不能修改数据
+            i    让一个文件不能被删除，改名，设置连接也无法写入或者添加数据，可以帮助增加系统的安全性
+    文件特殊属性
+        SUID
+            只对文件有效
+                当s出现在文件所有者的x权限上时，称为Set UID
+                SUID权限仅对二进制程序有效
+                执行者对于该程序需要具有x的执行权限
+                本权限仅在执行该程序过程中有效
+                执行者将具有该程序所有者的权限
+                ls -l /usr/bin/passwd
+                -rwsr-xr-x
+        SGID
+            除了文件，也能用在目录上
+                当s出现在用户组的x权限上时，称为Set GID
+                SGID对二进制程序有用
+                执行者对于该程序需要具有x的执行权限
+                执行者在执行过程中获得该程序用户组的支持
+
+            当一个目录设置了SGID：
+                                用户对此目录具有r与x权限时，该用户能进入该目录
+                                用户在此目录下的有效用户组将会变成该目录的用户组
+                                若用户在此目录下具有w的权限，则新创建的新文件的用户组与此目录用户组相同
+        SBIT sticky bit
+            只针对目录有效
+                当用户在该目录下创建文件或目录时，只有root与自己可以删除该文件
+
+        使用方式
+            在三个数字之前加一个数
+                4：SUID
+                2：SGID
+                1：SBIT
+    file
+        查看文件类型
+    命令与文件的查询
+        which   查询执行文件
+            -a
+
+        查找数据库文件中的文件记录
+            whereis
+                -b    查询二进制文件
+                -m    查找在说明文件manual路径下的文件
+                -s    只找source源文件
+                -u    查找不在上述三个选项中的其他特殊文件
+            locate
+                -i    忽略大小写
+                -r    后面可接正则表达式的显示方式
+            updatedb
+        查找硬盘
+            find [PATH] [OPTION] [ACTION]
+                时间有关的参数
+                    -mtime -4
+                    -mtime 4
+                    -mtime +4
+                用户和用户组有关的参数
+                    -uid n
+                    -gid n
+                    -user name
+                    -group name
+                    -nouser
+                    -nogroup
+                文件权限及名称有关的参数
+                    -name filename
+                    -size [+-]SIZE
+                    -type TYPE
+                            TYPE: f/b、c/d/l/s/p
+                    -perm mode  正好
+                    -perm -mode 包含所有
+                    -perm +mode 包含任一
+                其他可执行的操作
+                    -exec command
+                    -print
+
+                find / -perm +7000 -exec ls -l {} \;
+                find查找到的结果会被放到{}中， 被ls -l 执行
+
+        权限与命令的关系
+            让目录成为可工作目录：
+                用户对该目录至少具有x的权限
+                若用ls等命令，还需要r权限
+            读取一个文件：
+                用户对目录：x
+                用户对文件：r
+            修改一个文件：
+                用户对目录：x
+                用户对文件：r w
+            创建一个文件：
+                用户对目录：w x
+            进入目录执行文件：
+                用户对目录：x
+                用户对文件：x
