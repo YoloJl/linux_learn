@@ -20,12 +20,12 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 " Git plugin not hosted on GitHub
 Plugin 'git://github.com/Lokaltog/vim-powerline.git'
 Plugin 'git://github.com/scrooloose/nerdtree.git'
 Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" The sparkup vim script is in a subdirectory of this repo called vim.
+Plugin 'git://github.com/hdima/python-syntax'
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
@@ -36,8 +36,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
+" filetype plugin on
 " Brief help
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
@@ -54,16 +53,20 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 set laststatus=2 
 set t_Co=256
 let g:Powerline_symbols='unicode'
-set encoding=utf-8
+
+let python_highlight_all = 1
+colorscheme molokai
 
 set nu
 set autoindent
 set hlsearch
 set tabstop=4
 set shiftwidth=4
+
 set foldenable  
-set foldmethod=manual
-syntax on  
+set foldlevel=99
+set foldmethod=syntax
+
 set encoding=utf-8  
 set fileencoding=utf-8  
 set fileencodings=utf-8,gbk,gb2312,big58
