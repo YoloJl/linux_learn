@@ -14,6 +14,9 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+Plugin 'a.vim'
+" Plugin 'szw/vim-tags'
+Plugin 'taglist.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 Plugin 'Raimondi/delimitMate'
@@ -91,8 +94,8 @@ set tabstop=4
 set shiftwidth=4
 set ruler
 set ignorecase
-
-
+set mouse=a
+set history=50
 
 " 折叠
 set foldenable  
@@ -150,10 +153,9 @@ map <M-F2> :tabnew<CR>
 " 打开树状文件目录
 nnoremap <silent> <F4> :NERDTree<CR>
 
+" C，C++ 按F7调试
 
-" C，C++ 按F8调试
-
-map <F8> :call Rungdb()<CR>
+map <F7> :call Rungdb()<CR>
 
 func! Rungdb()
     exec "w"
@@ -212,7 +214,7 @@ func! CompileGpp()
 endfunc
 
 func! RunPython()
-	exec "!python333333333333333333333333333333333 %"
+	exec "!python3 %"
 endfunc
 
 func! CompileJava()
@@ -246,5 +248,17 @@ func! RunResult()
 		exec "!java %<"
 	endif
 endfunc
+
+""""""""ctags and Taglist""""""""""""  
+let Tlist_WinWidth=34  
+let Tlist_Auto_Open=0  
+" let Tlist_Show_One_File=1  
+let Tlist_Exit_OnlyWindow=1  
+let Tlist_Use_SingleClick=1  
+let Tlist_Use_Right_Window=1  
+let Tlist_File_Fold_Auto_Close=1  
+let Tlist_Auto_Update=1
+
+nmap <F3> :Tlist<CR>
 
 
