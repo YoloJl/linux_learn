@@ -20,14 +20,14 @@ chapter 5
 
 chapter 6
     chgrp
-        chrgp groupname file
+     	chrgp groupname file
     chown
-        chown ownername file
+    	chown ownername file
     chmod
-        chmod 777 file
-        chmod u=rwx,go=rx file
-        chmod a+w file
-        chmod a-w file
+   		chmod 777 file
+          chmod u=rwx,go=rx file
+     	chmod a+w file
+     	chmod a-w file
     文件权限
     目录权限
     绝对路径
@@ -182,3 +182,84 @@ chapter 7
             进入目录执行文件：
                 用户对目录：x
                 用户对文件：x
+chapter 8
+	df	列出文件系统的整体磁盘使用量
+		-h	以kb mb gb形式表示
+		-i	不用硬盘容量，以inode的形式表示
+	du	评估文件系统的磁盘使用量，常用于目录
+		-s	列出总量，而不列出每个个别的目录占用总量
+	
+	硬连接与软连接
+		硬连接
+			在某个目录下新建一条文件名连接到某inode号码关联的记录
+			不会占用inode和block
+			ln src dft
+			缺点
+				不能跨文件系统
+				不能连接到目录
+		软连接
+			创建一个独立的文件，这个文件会让数据的读取指向它连接的那个文件的文件名
+			所以当源文件被删除之后，软连接的文件无法打开
+			会占用inode和block
+			ln [-sf] src dst
+	fdisk
+
+chapter 9
+	.z
+	.gz
+	.bz2
+	.tar
+	.tar.gz
+	.tar.bz2
+
+	gzip zcat	.gz
+		gzip [-cdtv#] 文件名
+		gcat 文件名
+
+		-c	降压缩的数据输出到屏幕上
+		-d	解压缩的参数
+		-t	检验压缩文件的一致性，看看有无错误
+		-v	显示源文件与压缩文件的压缩比等信息
+		-#	压缩等级	-1最快，但压缩比最差	默认为-6
+
+	bzip bzcat	.bz2
+		bzip [-cdkzv#] 文件名
+		bzcat 文件名
+		-k	保留原文件
+		-z	压缩的参数
+	
+	tar
+		压缩	-jcv -f filename.tar.bz2 要被压缩的文件或目录
+		查询	-jtv -f filename.tar.bz2
+		解压缩	-jxv -f filename.tar.bz2 -C 欲解压的目录
+		-z	gzip	.tar.gz
+		-j	bzip2	.tar.bz2
+
+	dump
+		备份
+	restore
+		恢复
+
+chapter 10
+	
+
+
+
+
+
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
