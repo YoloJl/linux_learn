@@ -28,7 +28,7 @@ git config --global user.email "pengzhipz@gmail.com"
 	修改remote
 		git remote set-url origin git@github.com:pengzhipxz/Linux_learning.git
 	
-	添加修改
+	添加修改删除
 		git add filename
 		git commit -m "descriptio"
 
