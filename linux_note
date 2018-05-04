@@ -241,7 +241,284 @@ chapter 9
 		恢复
 
 chapter 10
-	
+	vim
+
+chapter 11
+	内核
+		管理整个计算机硬件
+		我们通过shell与内核通信，让内核可以控制硬件准确无误的工作
+
+	bash shell
+		history	默认一千个
+
+		alias	命令别名设置
+
+		echo unset
+
+		'	反单引号，先执行反单引号之内的命令
+			ls -l 'locate crontab'
+
+	环境变量
+		env
+			HOME
+			SHELL
+			HISTSIZE
+			MAIL
+			PATH
+				执行文件的查找路径
+			LANG
+			RANDOM
+				产生0-9之间的随机数
+				declare -i number=$RANDOM*10/32767 ;echo $number
+		set
+			产看所有变量
+		
+		$	代表本shell的PID
+		echo $? 查看上一个命令是否成功执行
+		
+		export 
+			自定义变量转换成环境变量
+		
+		read
+			-p	可接提示符
+			-t	可接等待时间
+			读取来自键盘的输入的变量
+			read -p "please keyin your name: " -t 30 named
+
+		declare/typeset
+			声明变量的类型，默认为字符串
+			-a	数组	
+			-i	int
+			-x	环境变量
+			-r	只读
+		
+		ulimit
+			文件系统与程序的限制关系
+
+		变量内容的删除、替代与替换
+			variable#/*
+				#代表从前面开始删除，且仅删除最短的一个
+				##符合替换文字的最长的那一个
+			从后向前删除
+				%
+				%%
+
+			${variable#关键字}
+
+			${variable##关键字}
+
+			${variable%关键字}
+
+			${variable%%关键字}
+
+			${variable/旧字符串/新字符串}
+
+			${variable//旧字符串/新字符串}
+			
+			变量设置方式		str未设置	设置为空	设置为非空
+			var=${str-expr}		var=expr	var=		var=$str
+
+			var=${str:-expr}	var=expr	var=expr	var=$str
+
+			var=${str+expr}		var=		var=expr	var=expr
+
+			var=${str:+expr}	var=		var=		var=expr
+
+			var=${str=expr}		str=expr	str不变		str不变
+								var=expr	var=		var=$str
+
+			var=${str:=expr}	str=expr	str=expr	str不变
+								var=expr	var=expr	var=$str
+
+			var=${str?expr}		expr输出	var=		var=str
+								至stderr
+
+			var=${str:?expr}	expr输出	expr输出	var=str
+								至stderr	至stderr
+
+	命令别名与历史命令
+		alias
+			别名='命令'
+		unalias
+		
+		history
+			-n
+			-c
+				消除目前shell中的history
+			-a
+				将新增的history命令增入histfiles中
+			-r
+				将histfiles内容读取到shell的history记忆中
+			-w
+				将目前记忆内容写入histfile
+
+			！number
+				执行第几条命令
+			！command
+				向前搜索由command开头的命令，并执行
+
+	bashshell的操作环境
+		路径与命令查找顺序
+			1.以绝对路径或者相对路径执行
+			2.由alias找到该命令来执行
+			3.由bash内置的命令来执行
+			4.由$PATH变量的顺序找到的第一个命令来执行
+
+		bash环境配置文件
+			login shell
+				会读取以下两个文件
+					/etc/profile
+						系统的整体设置，最好不要修改
+					~/.bash_profile或~/.bash_login或~/.profile
+						用户个人的设置
+
+			non-login shell
+				会读取~/.bashrc
+
+			source
+				读入环境配置文件
+
+		stty
+			-a	查看目前环境中所有的按键列表
+
+		通配符与特殊符号
+			*
+			?
+			[]
+				有一个字符
+			[-]
+				代表编码顺序在内的所有字符
+			[^]
+				非
+		
+		数据流重定向
+			标准输入
+				0	< <<
+			标准输出
+				1	> >>
+			标准错误输出
+				2	2> 2>>
+
+			吃掉所有错误信息
+				2> /dev/null
+			
+			创建新文件
+				cat > catfile < ~/.bashrc
+
+		管道命令pipe
+			ls -al /etc | less
+
+			'|'
+				仅能处理由前一个命令传过来的正确信息，对错误信息无法处理
+				每个管道后面界的第一个数据必然是命令，而且该命令必须要能够接收standard input
+				
+			选取命令
+				cut
+					从一行信息中取出想要的
+					-d '分隔字符' -f fields
+					-c 字符范围
+				
+				grep
+					从一行信息中分析信息
+					grep [-acinv] [--color=auto] '查找字符串' filename
+					-a
+						将binary文件以text文件的方式去查找
+					-c
+						计算找到的'查找字符串'的次数
+					-i
+						忽略大小写
+					-n
+						顺序输出行号
+					-v	
+						反向选择
+			
+			排序命令
+				sort
+					-f
+						忽略大小写
+					-u
+						uniq
+				wc
+					-l
+						仅列出行
+					-w
+						仅列出多少字
+					-m
+						列出多少字符
+				uniq
+					-i
+					-c
+			
+		双向重定向
+			tee
+
+		字符转换命令
+			tr
+				删除一段信息当中的文字，或者进行文字信息的转换
+				-d
+					删除
+				last | tr '[a-z]' '[A-Z]'
+			col
+				-x
+					将tab键转换为对应的空格键
+				-b
+					在文字内有反斜线时，仅保留最后接的那个字符
+			join
+				将两个文件中有相同数据的一行加在一起
+				join [-ti12] file1 file2
+
+				join -t ':' -1 4 file1 -2 3 file2
+			paste
+				将两行粘贴在一起，以tab隔开
+				-d
+					指定分隔字符
+			expand
+				将tab转换为空格
+				-t
+					指定一个tab转换为多少个空格
+
+		切割命令
+			split [-bl] file prefix
+
+chapter 12
+	正则表达式
+		[:alnum:]
+		[:alpha:]
+		[:blank:]
+		[:cntrl:]
+		[:digit:]
+		[:graph:]
+		[:lower:]
+		[:print:]
+		[:punct:]
+		[:upper:]
+		[:space:]
+		[:xdigit]
+		
+	grep
+		从一行信息中分析信息
+		grep [-acinv] [--color=auto] '查找字符串' filename
+		-a
+			将binary文件以text文件的方式去查找
+		-c
+			计算找到的'查找字符串'的次数
+		-i
+			忽略大小写
+		-n
+			顺序输出行号
+		-v	
+			反向选择
+
+		grep [-A] [-B] [--color=auto] '搜寻字符串' filename
+		-A
+			后面跟数字，after，代表除了该行，后续的n行也列出来 
+		-B
+			后面跟数字，before，代表除了该行，前面的n行也列出来
+
+		grep在查找数据的过程中是以行为单位来进行数据的选取的
+
+
+
 
 
 
