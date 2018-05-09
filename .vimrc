@@ -276,4 +276,6 @@ let Tlist_Auto_Update=1
 
 nmap <F3> :Tlist<CR>
 
-
+runtime! ftplugin/man.vim
+nmap <C-K> :Man 2 <cword><CR>
+nmap <C-L> :Man 3 <cword><CR>
