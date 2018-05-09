@@ -63,15 +63,30 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_comments=1  
 let g:ycm_complete_in_strings=1  
 let g:ycm_collect_identifiers_from_comments_and_strings=0
-
+let g:ycm_show_diagnostics_ui=0
 
 """""""""""""""syntastic"""""""""""""""""""
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='►'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+
+let g:syntastic_auto_jump = 1
+
+
+let g:syntastic_cpp_checkers=['gcc']
+let g:syntastic_cpp_compiler='g++'
+let g:syntastic_cpp_compiler_options='-std=c++11'
+
+let g:syntastic_python_checkers = ['python3']
 
 
 """""""""" vim-powerline"""""""""""""""""""
