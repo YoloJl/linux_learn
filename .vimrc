@@ -24,6 +24,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
 " Git plugin not hosted on GitHub
 Plugin 'git://github.com/Lokaltog/vim-powerline.git'
 Plugin 'git://github.com/scrooloose/nerdtree.git'
@@ -111,6 +113,12 @@ set ruler
 set ignorecase
 set mouse=a
 set history=50
+" 突出显示当前列
+set cursorcolumn
+" 突出显示当前行
+set cursorline
+
+
 
 " 折叠
 set foldenable  
