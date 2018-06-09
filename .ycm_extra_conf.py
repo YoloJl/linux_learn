@@ -57,6 +57,8 @@ flags = [
 '-isystem',
 '/usr/include',
 '/usr/include/x86_64-linux-gnu/c++',
+'-isystem'
+'$GOROOT/src'
 ]
 
 
