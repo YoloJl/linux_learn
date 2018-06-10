@@ -19,13 +19,20 @@ Plugin 'a.vim'
 Plugin 'taglist.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
-Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+
 Plugin 'fatih/vim-go'
+Plugin 'fatih/molokai'
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'majutsushi/tagbar'
+"GoDecls GoDeclsDir
+Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
 " Git plugin not hosted on GitHub
@@ -100,10 +107,10 @@ let g:Powerline_symbols='unicode'
 
 let python_highlight_all = 1
 
-
 " 配色
 colorscheme molokai
-
+let g:rehash256 = 1
+let g:molokai_original = 1
 
 " 基本设置
 set nu
@@ -166,75 +173,29 @@ map <C-A> ggVGY
 map! <C-A> <Esc>ggVGY
 map <F12> gg=G
 
-" 选中状态下 Ctrl+c 复制
-vmap <C-c> "+y
 " 去空行
 nnoremap <F2> :g/^\s*$/d<CR>
 " 比较文件
 nnoremap <C-F2> :vert diffsplit
 
-" 新建标签
-map <M-F2> :tabnew<CR>
 " 打开树状文件目录
 nnoremap <silent> <F4> :NERDTree<CR>
 
-" C，C++ 按F7调试
-
-map <F7> :call Rungdb()<CR>
-
-func! Rungdb()
-    exec "w"
-    exec "!g++ % -g -o %<"
-    exec "!gdb ./%<"
-endfunc
-
-
 " C, C++ 按F5编译 F6运行
-
 map <F5> :call CompileCode()<CR>
 map <F6> :call RunResult()<CR>
 
 func! CompileGcc()
 	exec "w"
 	let compilecmd="!gcc "
-	let compileflag="-o %< "
-	if search("mpi\.h") != 0
-		let compilecmd = "!mpicc "
-	endif
-	if search("glut\.h") != 0
-		let compileflag .= " -lglut -lGLU -lGL "
-	 endif
-	if search("cv\.h") != 0
-		let compileflag .= " -lcv -lhighgui -lcvaux "
-	endif
-	if search("omp\.h") != 0
-		let compileflag .= " -fopenmp "
-    endif
-	if search("math\.h") != 0
-		let compileflag .= " -lm "
-	endif
+	let compileflag="-g -o %< "
 	exec compilecmd." % ".compileflag
 endfunc
 
 func! CompileGpp()
 	exec "w"
 	let compilecmd="!g++ -std=c++11"
-	let compileflag="-o %< "
-	if search("mpi\.h") != 0
-		let compilecmd = "!mpic++ "
-	endif
-	if search("glut\.h") != 0
-		let compileflag .= " -lglut -lGLU -lGL "
-	endif
-	if search("cv\.h") != 0
-		let compileflag .= " -lcv -lhighgui -lcvaux "
-	endif
-	if search("omp\.h") != 0
-		let compileflag .= " -fopenmp "
-	endif
-	if search("math\.h") != 0
-		let compileflag .= " -lm "
-	endif
+	let compileflag="-g -o %< "
 	exec compilecmd." % ".compileflag
 endfunc
 
@@ -247,7 +208,7 @@ func! CompileJava()
 endfunc
 
 func! CompileGo()
-	exec "!go build"
+	exec "!go build %"
 endfunc
 
 func! CompileCode()
@@ -267,16 +228,16 @@ endfunc
 
 func! RunResult()
 	exec "w"
-	if search("mpi\.h") != 0
-		exec "!mpirun -np 4 ./%<"
-	elseif &filetype == "cpp"
+	if &filetype == "cpp"
 		exec "! ./%<"
 	elseif &filetype == "c"
 		exec "! ./%<"
 	elseif &filetype == "python"
-		exec "call RunPython"
+		exec "call RunPython()"
 	elseif &filetype == "java"
 		exec "!java %<"
+	elseif &filetype == "go"
+		exec "! ./%<"
 	endif
 endfunc
 
@@ -292,12 +253,12 @@ let Tlist_Auto_Update=1
 
 nmap <F3> :Tlist<CR>
 
+""""""""lookup manpage"""""""""""""""
 runtime! ftplugin/man.vim
 nmap <C-K> :Man 2 <cword><CR>
 nmap <C-L> :Man 3 <cword><CR>
 
-
-"""""""""go tag"""""""""""""""""""""
+"""""""""go tag""""""""""""""""""""""
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds'     : [
@@ -326,4 +287,20 @@ let g:tagbar_type_go = {
 	\ 'ctagsargs' : '-sort -silent'
 \ }
 
-
+""""""""vim-go"""""""""""""""""""""""
+set autowrite
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+let g:go_addtags_transform = "camelcase"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+set updatetime=100
+let g:go_metalinter_autosave = 1
