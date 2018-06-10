@@ -15,7 +15,8 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
-""""""""""通用配置""""""""""
+
+""""""""""通用配置"""""""""""
 "使用git命令"
 Plugin 'tpope/vim-fugitive'
 "括号补全"
@@ -26,6 +27,10 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Valloric/YouCompleteMe'
 "配色"
 Plugin 'fatih/molokai'
+
+Plugin 'godlygeek/tabular'
+""""""""""""""""""""""""""""
+
 """"""""""C/C++配置""""""""""
 "Ctags使用"
 " Plugin 'szw/vim-tags'
@@ -34,21 +39,20 @@ Plugin 'taglist.vim'
 Plugin 'scrooloose/syntastic'
 "C++高亮"
 Plugin 'octol/vim-cpp-enhanced-highlight'
+"""""""""""""""""""""""""""""
 
-"go语言配置"
+""""""""""go语言配置"""""""""
 Plugin 'fatih/vim-go'
-
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'SirVer/ultisnips'
+"go tags
 Plugin 'majutsushi/tagbar'
 "GoDecls GoDeclsDir
 Plugin 'ctrlpvim/ctrlp.vim'
+"""""""""""""""""""""""""""""
 
-"Plugin 'godlygeek/tabular'
-"Plugin 'plasticboy/vim-markdown'
 " Git plugin not hosted on GitHub
-
 Plugin 'git://github.com/Lokaltog/vim-powerline.git'
 Plugin 'git://github.com/scrooloose/nerdtree.git'
 Plugin 'git://git.wincent.com/command-t.git'
@@ -264,7 +268,8 @@ let Tlist_Use_Right_Window=1
 let Tlist_File_Fold_Auto_Close=1  
 let Tlist_Auto_Update=1
 
-nmap <F3> :Tlist<CR>
+""""""""Tagbar"""""""""""""""""""""""
+nnoremap <F3> :Tagbar<CR>
 
 """"""""lookup manpage"""""""""""""""
 runtime! ftplugin/man.vim
