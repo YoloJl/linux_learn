@@ -13,34 +13,50 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-" Plugin 'szw/vim-tags'
-Plugin 'taglist.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
+""""""""""通用配置""""""""""
+"使用git命令"
+Plugin 'tpope/vim-fugitive'
+"括号补全"
 Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/syntastic'
+"显示对齐线"
 Plugin 'Yggdroot/indentLine'
+"自动补全"
 Plugin 'Valloric/YouCompleteMe'
+"配色"
+Plugin 'fatih/molokai'
+""""""""""C/C++配置""""""""""
+"Ctags使用"
+" Plugin 'szw/vim-tags'
+Plugin 'taglist.vim'
+"语法检查"
+Plugin 'scrooloose/syntastic'
+"C++高亮"
 Plugin 'octol/vim-cpp-enhanced-highlight'
 
+"go语言配置"
 Plugin 'fatih/vim-go'
-Plugin 'fatih/molokai'
+
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'majutsushi/tagbar'
 "GoDecls GoDeclsDir
 Plugin 'ctrlpvim/ctrlp.vim'
+
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
 " Git plugin not hosted on GitHub
+
 Plugin 'git://github.com/Lokaltog/vim-powerline.git'
 Plugin 'git://github.com/scrooloose/nerdtree.git'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'git://github.com/hdima/python-syntax'
+
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
@@ -48,6 +64,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 " Brief help
@@ -58,7 +75,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
 
 """"""""""""""YouCompleteMe""""""""""""""""
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
@@ -90,7 +106,6 @@ let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
 
 let g:syntastic_auto_jump = 1
-
 
 let g:syntastic_cpp_checkers=['gcc']
 let g:syntastic_cpp_compiler='g++'
@@ -125,7 +140,6 @@ set history=50
 set cursorcolumn
 " 突出显示当前行
 set cursorline
-
 
 
 " 折叠
