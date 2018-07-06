@@ -157,24 +157,10 @@ set fileencodings=utf-8,gbk,gb2312,big58
 
 
 " 文件设置
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.go,*.py exec ":call SetTitle()"
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()"
 func SetTitle()
 	if &filetype == 'sh'
-		call setline(1,"\#########################################################################")
-		call append(line("."), "\# File Name: ".expand("%")) 
-		call append(line(".")+1, "\# Author: pengzhi") 
-		call append(line(".")+2, "\# mail: pengzhipxz@qq.com") 
-		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\#########################################################################") 
-		call append(line(".")+5, "\#!/bin/bash")
-	else
-		call setline(1,"\/************************************************************************")
-		call append(line("."), "\* File Name: ".expand("%")) 
-		call append(line(".")+1, "\* Author: pengzhi") 
-		call append(line(".")+2, "\* mail: pengzhipxz@qq.com") 
-		call append(line(".")+3, "\* Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\************************************************************************/") 
-	call append(line(".")+5, "")
+		call setline(1, "\#!/bin/bash") 
 	endif
 
 	autocmd BufNewFile * normal G
@@ -259,13 +245,13 @@ func! RunResult()
 endfunc
 
 """"""""ctags and Taglist""""""""""""  
-let Tlist_WinWidth=34  
-let Tlist_Auto_Open=0  
-" let Tlist_Show_One_File=1  
-let Tlist_Exit_OnlyWindow=1  
-let Tlist_Use_SingleClick=1  
-let Tlist_Use_Right_Window=1  
-let Tlist_File_Fold_Auto_Close=1  
+let Tlist_WinWidth=34 
+let Tlist_Auto_Open=0 
+" let Tlist_Show_One_File=1 
+let Tlist_Exit_OnlyWindow=1 
+let Tlist_Use_SingleClick=1 
+let Tlist_Use_Right_Window=1 
+let Tlist_File_Fold_Auto_Close=1 
 let Tlist_Auto_Update=1
 
 """"""""Tagbar"""""""""""""""""""""""
