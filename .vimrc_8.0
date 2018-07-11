@@ -153,7 +153,10 @@ nmap <leader>f :find<cr>
 " 映射全选+复制 ctrl+a
 map <C-A> ggVGY
 " 自动缩进
-map <F12> gg=G
+map <F12> :GoDebugStart<CR>
+map <C-F12> :GoDebugStop<CR>
+map <C-S-F12> :GoDebugRestart<CR>
+map <C-F10> :GoDebugStep<CR>
 " 去空行
 nnoremap <F2> :g/^\s*$/d<CR>
 " 打开树状文件目录
@@ -240,7 +243,8 @@ let g:ale_lint_on_enter = 0
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 1
 let g:ale_list_window_size = 5
-
+let g:ale_lint_on_text_changed = 'never'
+"let g:ale_fix_on_save = 1
 let g:ale_linters = {
 \   'c++': ['gcc'],
 \   'c': ['gcc'],
