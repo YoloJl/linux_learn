@@ -17,8 +17,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'L9'
 
 """"""""""通用配置"""""""""""
-"使用git命令"
-Plugin 'tpope/vim-fugitive'
 "括号补全"
 Plugin 'Raimondi/delimitMate'
 "显示对齐线"
@@ -27,21 +25,30 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Valloric/YouCompleteMe'
 "配色"
 Plugin 'fatih/molokai'
+"airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+"""""""""""""""""""""""""""""
+"syntastic
+Plugin 'w0rp/ale'
 
+"MarkDown
 Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+"toml json
+Plugin 'cespare/vim-toml'
+Plugin 'elzr/vim-json'
 """"""""""""""""""""""""""""
 
-""""""""""C/C++配置""""""""""
+""""""""""C/C++""""""""""
 "Ctags使用"
 " Plugin 'szw/vim-tags'
 Plugin 'taglist.vim'
-"语法检查"
-Plugin 'scrooloose/syntastic'
 "C++高亮"
 Plugin 'octol/vim-cpp-enhanced-highlight'
 """""""""""""""""""""""""""""
 
-""""""""""go语言配置"""""""""
+""""""""""golang"""""""""
 Plugin 'fatih/vim-go'
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'AndrewRadev/splitjoin.vim'
@@ -52,11 +59,13 @@ Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
 """""""""""""""""""""""""""""
 
+""""""""""python"""""""""
+Plugin 'python-mode/python-mode'
+"""""""""""""""""""""""""
+
 " Git plugin not hosted on GitHub
-Plugin 'git://github.com/Lokaltog/vim-powerline.git'
 Plugin 'git://github.com/scrooloose/nerdtree.git'
 Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'git://github.com/hdima/python-syntax'
 
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -94,34 +103,6 @@ let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1  
 let g:ycm_collect_identifiers_from_comments_and_strings=0
 let g:ycm_show_diagnostics_ui=0
-
-"""""""""""""""syntastic"""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=0
-
-let g:syntastic_auto_jump = 1
-
-let g:syntastic_cpp_checkers=['gcc']
-let g:syntastic_cpp_compiler='g++'
-let g:syntastic_cpp_compiler_options='-std=c++11'
-
-let g:syntastic_python_checkers = ['python3']
-
-
-"""""""""" vim-powerline"""""""""""""""""""
-set laststatus=2 
-set t_Co=256
-let g:Powerline_symbols='unicode'
 
 let python_highlight_all = 1
 
@@ -162,90 +143,24 @@ func SetTitle()
 	if &filetype == 'sh'
 		call setline(1, "\#!/bin/bash") 
 	endif
-
 	autocmd BufNewFile * normal G
 endfunc
 
 
 """""""""""""" 键盘命令""""""""""""""""""""
-nmap <leader>w :w!<cr>
 nmap <leader>f :find<cr>
 
 " 映射全选+复制 ctrl+a
 map <C-A> ggVGY
-map! <C-A> <Esc>ggVGY
-map <F12> gg=G
-
 " 去空行
 nnoremap <F2> :g/^\s*$/d<CR>
-" 比较文件
-nnoremap <C-F2> :vert diffsplit
-
 " 打开树状文件目录
-nnoremap <silent> <F4> :NERDTree<CR>
-
-" C, C++ 按F5编译 F6运行
-map <F5> :call CompileCode()<CR>
-map <F6> :call RunResult()<CR>
-
-func! CompileGcc()
-	exec "w"
-	let compilecmd="!gcc "
-	let compileflag="-g -o %< "
-	exec compilecmd." % ".compileflag
-endfunc
-
-func! CompileGpp()
-	exec "w"
-	let compilecmd="!g++ -std=c++11"
-	let compileflag="-g -o %< "
-	exec compilecmd." % ".compileflag
-endfunc
-
-func! RunPython()
-	exec "!python3 %"
-endfunc
-
-func! CompileJava()
-	exec "!javac %"
-endfunc
-
-func! CompileGo()
-	exec "!go build %"
-endfunc
-
-func! CompileCode()
-	exec "w"
-	if &filetype == "cpp"
-		exec "call CompileGpp()"
-	elseif &filetype == "c"
-		exec "call CompileGcc()"
-	elseif &filetype == "python"
-		exec "call RunPython()"
-	elseif &filetype == "java"
-		exec "call CompileJava()"
-	elseif &filetype == "go"
-		exec "call CompileGo()"
-	endif
-endfunc
-
-func! RunResult()
-	exec "w"
-	if &filetype == "cpp"
-		exec "! ./%<"
-	elseif &filetype == "c"
-		exec "! ./%<"
-	elseif &filetype == "python"
-		exec "call RunPython()"
-	elseif &filetype == "java"
-		exec "!java %<"
-	elseif &filetype == "go"
-		exec "! ./%<"
-	endif
-endfunc
+nnoremap <silent> <F3> :NERDTree<CR>
+" Tagbar
+nnoremap <F4> :Tagbar<CR>
 
 """"""""ctags and Taglist""""""""""""  
-let Tlist_WinWidth=34 
+let Tlist_WinWidth=33 
 let Tlist_Auto_Open=0 
 " let Tlist_Show_One_File=1 
 let Tlist_Exit_OnlyWindow=1 
@@ -254,13 +169,10 @@ let Tlist_Use_Right_Window=1
 let Tlist_File_Fold_Auto_Close=1 
 let Tlist_Auto_Update=1
 
-""""""""Tagbar"""""""""""""""""""""""
-nnoremap <F3> :Tagbar<CR>
-
 """"""""lookup manpage"""""""""""""""
-runtime! ftplugin/man.vim
-nmap <C-K> :Man 2 <cword><CR>
-nmap <C-L> :Man 3 <cword><CR>
+"runtime! ftplugin/man.vim
+"nmap <C-K> :Man 2 <cword><CR>
+"nmap <C-L> :Man 3 <cword><CR>
 
 """""""""go tag""""""""""""""""""""""
 let g:tagbar_type_go = {
@@ -308,3 +220,56 @@ let g:go_auto_type_info = 1
 let g:go_auto_sameids = 1
 set updatetime=100
 let g:go_metalinter_autosave = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_trailing_whitespace_error = 1
+
+map <F12> :GoDebugStart<CR>
+map <C-F12> :GoDebugStop<CR>
+map <C-S-F12> :GoDebugRestart<CR>
+map <C-F10> :GoDebugStep<CR>
+""""""""ale""""""""""""""""""""""""""
+let g:ale_sign_column_always = 1
+
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 1
+let g:ale_list_window_size = 5
+"let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\   'c++': ['gcc'],
+\   'c': ['gcc'],
+\   'python': ['pylint'],
+\}
+let g:airline#extensions#ale#enabled = 1
+
+""""""""airline""""""""""""""""""""""
+let g:airline#extensions#tabline#enabled = 1
+
+""""""""toml json""""""""""""""""""""
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+
+""""""""python mode""""""""""""""""""
+let g:pymode_python = 'python3'
+let g:pymode_lint = 0  " ALE
+let g:pymode_folding = 0  " SimplyFold
+let g:pymode_run = 0
+let g:pymode_breakpoint = 0
+let g:pymode_options = 0
+let g:pymode_doc = 0
+let g:pymode_rope = 0
+let g:pymode_debug = 0
