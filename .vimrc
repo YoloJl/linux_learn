@@ -30,7 +30,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 """""""""""""""""""""""""""""
 "syntastic
-Plugin 'w0rp/ale'
+"Plugin 'w0rp/ale'
 
 "MarkDown
 Plugin 'godlygeek/tabular'
@@ -125,8 +125,6 @@ set history=50
 set cursorcolumn
 " 突出显示当前行
 set cursorline
-
-
 " 折叠
 set foldenable  
 set foldlevel=99
@@ -219,42 +217,43 @@ let g:go_highlight_extra_types = 1
 let g:go_auto_type_info = 1
 let g:go_auto_sameids = 1
 set updatetime=100
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 let g:go_highlight_operators = 1
 let g:go_highlight_function_arguments = 1
 let g:go_highlight_space_tab_error = 1
 let g:go_highlight_array_whitespace_error = 1
 let g:go_highlight_trailing_whitespace_error = 1
-
 map <F12> :GoDebugStart<CR>
 map <C-F12> :GoDebugStop<CR>
 map <C-S-F12> :GoDebugRestart<CR>
 map <C-F10> :GoDebugStep<CR>
 """"""""ale""""""""""""""""""""""""""
-let g:ale_sign_column_always = 1
-
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚡'
-let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-
-let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 1
-let g:ale_list_window_size = 5
+"let g:ale_sign_column_always = 1
+"
+"let g:ale_sign_error = '✗'
+"let g:ale_sign_warning = '⚡'
+"let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"let g:ale_echo_msg_error_str = 'E'
+"let g:ale_echo_msg_warning_str = 'W'
+"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_enter = 0
+"
+"let g:ale_open_list = 1
+"let g:ale_keep_list_window_open = 1
+"let g:ale_list_window_size = 5
 "let g:ale_fix_on_save = 1
-let g:ale_linters = {
-\   'c++': ['gcc'],
-\   'c': ['gcc'],
-\   'python': ['pylint'],
-\}
-let g:airline#extensions#ale#enabled = 1
+"let g:ale_linters = {
+"\   'c++': ['gcc'],
+"\   'c': ['gcc'],
+"\   'python': ['pylint'],
+"\}
+"let g:airline#extensions#ale#enabled = 1
 
 """"""""airline""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
