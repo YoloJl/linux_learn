@@ -1,7 +1,6 @@
 初次使用配置用户名和邮箱
 git config --global user.name "pengzhi"
-git config --global user.email "pengzhipz@gmail.com"
-
+git config --global user.email "pengzhipxz@qq.com"
 
 
 配置ssh
@@ -37,3 +36,9 @@ git config --global user.email "pengzhipz@gmail.com"
 	同步
 		git pull origin master
 		git push
+	撤销
+		git stash
+	查看分支
+		git branch
+	切换分支
+		git checkout

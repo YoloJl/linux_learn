@@ -1,0 +1,73 @@
+Installation
+	sudo apt-get remove docker docker-engine docker.io
+
+	sudo apt-get update
+
+	sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+	sudo apt-key fingerprint 0EBFCD88
+
+	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+	sudo apt-get update
+		latest version
+			sudo apt-get install docker-ce
+		other version
+			apt-cache madison docker-ce
+				sudo apt-get install docker-ce=<VERSION>
+
+Test Installation
+	sudo docker run hello-world
+
+Uninstall
+	sudo apt-get purge docker-ce
+	sudo rm -rf /var/lib/docker
+
+Post-installation
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	reboot
+	sudo chmod a+rw /var/run/docker.sock
+	docker run hello-world
+		if warning:
+			sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+			sudo chmod g+rwx "/home/$USER/.docker" -R
+			restart terminal
+
+Config
+	sudo vim /etc/docker/daemon.json
+		{
+			"registry-mirrors":	[
+				"https://registry.docker-cn.com"
+				"https://v6w5lm2m.mirror.aliyuncs.com"
+			]
+			"dns": ["10.0.0.2", "10.0.0.3"] -> nmcli dev show | grep 'IP4.DNS'
+		}
+
+Aliyun accelerate
+	注册阿里云账号 
+	搜索容器与镜像服务 进入管理控制台
+	配置镜像加速，修改/etc/docker/daemon.json
+	创建命名空间
+	docker login registry.cn-hangzhou.aliyuncs.com
+	docker tag imageId registry.cn-hangzhou.aliyuncs.com/namespace/image:version
+	docker push registry.cn-hangzhou.aliyuncs.com/namespace/image:version
+	docker pull registry.cn-hangzhou.aliyuncs.com/namespace/image:version
+
+Nvidia-Docker
+	# Add the package repositories
+	curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
+	  sudo apt-key add -
+	distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+	curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+	  sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+	sudo apt-get update
+
+	# Install nvidia-docker2 and reload the Docker daemon configuration
+	sudo apt-get install -y nvidia-docker2
+	sudo pkill -SIGHUP dockerd
+
+	# Test nvidia-smi with the latest official CUDA image
+	docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi

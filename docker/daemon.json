@@ -1,0 +1,13 @@
+{
+    "runtimes": {
+		"nvidia": {
+			"path": "/usr/bin/nvidia-container-runtime",
+			"runtimeArgs":[]
+		}
+	},
+
+	"registry-mirrors": [
+		"https://v6w5lm2m.mirror.aliyuncs.com"
+	],
+	"dns": ["192.168.232.2"," 219.238.164.7", "219.238.164.3"]
+}

@@ -1,0 +1,95 @@
+Master-Slave-Replication
+
+	Mysql Version：MySQL 5.7.22
+	Master-Server : 192.168.232.129
+	Slave-Server : 192.168.232.130
+
+	
+	Master-Server-Config:
+		sudo systemctl stop firewalld.service
+	
+		sudo service mysqld stop
+		
+		sudo vim /etc/my.cnf
+			[mysqld]
+			log-bin=/var/lib/mysql/mysql-binlog
+			server-id=1
+		
+			# binlog-do-db=cmdb
+			# binlog-ignore-db=mysql
+			# binlog-ignore-db=test
+
+		sudo service mysqld start
+
+		mysql -uroot -p
+			mysql> CREATE USER 'replication-1'@'192.168.232.130' IDENTIFIED BY 'PASSWORD';
+			mysql> GRANT REPLICATION SLAVE ON *.* TO 'replication-1'@'192.168.232.130';
+
+
+	Slave-Server-Config:
+		sudo service mysqld stop
+
+		sudo vim /etc/my.cnf
+			[mysqld]
+			server-id=2
+
+		sudo service mysqld start
+
+		mysql -uroot -p
+
+
+		Master-Server-Config:
+			SHOW MASTER STATUS;
+
+
+	Slave-Server-Config:
+		mysql> 	
+		CHANGE MASTER TO MASTER_HOST='192.168.232.129', MASTER_USER='replication-1', MASTER_PASSWORD='135792468', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=154;
+
+		START SLAVE;
+
+		SHOW SLAVE STATUS\G;
+		
+		STOP SLAVE;
+
+	Others:
+		SHOW SLAVE HOSTS;
+
+		SHOW BINARY LOGS;
+
+		SHOW BINLOG ENENTS IN 'mysql-binlog.000001';
+
+
+Master-Slave-Switch
+
+	Slave-Server-Config:
+		sudo systemctl stop firewalld.service
+
+		mysql> 	stop slave io_thread;
+			 > 	show processlist\G;
+			 >	reset master;
+			 >	create user 'replication-2'@'192.168.232.129' IDENTIFIED BY '246813579';
+			 >	grant replication slave on *.* to 'replication-2'@'192.168.232.129';
+			 >	show master status;
+
+	
+	Master-Server-Config:
+		sudo systemctl stop firewalld.service
+
+		mysql>	change master to master_host='192.168.232.130', master_user='replication-2', master_password='246813579', master_log_file='mysql-bin.000001', master_log_pos=xxx;
+			 >	start slave;
+			 >	show slave status\G;
+
+
+mysqldump
+	mysqldump -uroot -p --all-databases >/tmp/all.sql
+
+	mysqldump -uroot -p --databases db1 db2 >/tmp/db1_2.sql
+
+	mysqldump -uroot -p --databases db1 --tables t1 t2  >/tmp/db1_t1_t2.sql
+
+	mysqldump -uroot -p --databases db1 --tables t1 --where='id=1'  >/tmp/db1_t1_id1.sql
+
+
+	mysql -hhostname -uusername -ppassword databasename < backupfile.sql
+

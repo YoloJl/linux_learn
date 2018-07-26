@@ -1,0 +1,17 @@
+cuda
+	bash cuda-xxxx-linux.run
+
+	vim ~/.bashrc
+		export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+		export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+	vim /etc/profile
+		export PATH=/usr/local/cuda/bin:$PATH
+	vim /etc/ld.so.conf.d/cuda.conf
+		/usr/local/cuda/lib64
+	
+	ldconfig
+
+	test-installation
+		cd /usr/local/cuda-8.0/samples/1_Utilities/deviceQuery
+		make
+		./deviceQuery

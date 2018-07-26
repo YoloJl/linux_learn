@@ -1,0 +1,25 @@
+QQ 
+	Installation
+	1.QQ
+		sudo add-apt-repository ppa:wine/wine-builds 
+		sudo apt-get update
+		sudo apt-get install winehq-devel
+		go to https://phpcj.org/wineqq/ to Download the tar-QQ
+		tar xv -f tar-QQ -C ~/
+
+	2.modify font
+	
+	Uninstall
+		rm -rf ~/.wine
+		rm -rf ~/.local/share/applications/wine-QQ.desktop
+		rm -rf ~/.local/share/icons/hicolor/256x256/apps/QQ.png
+		rm -rf ~/.fonts/simsun.ttc
+	
+WeChat Installation
+	1.nodejs
+		curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+		sudo apt-get install -y nodejs
+	2.WeChat
+		git clone https://github.com/geeeeeeeeek/electronic-wechat.git
+		cd electronic-wechat
+		npm install && npm start

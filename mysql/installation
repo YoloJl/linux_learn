@@ -1,0 +1,17 @@
+wget https://repo.mysql.com//mysql57-community-release-el7.rpm
+
+sudo yum localinstall mysql57-community-release-el7.rpm
+
+sudo yum install mysql-server
+
+systemctl start mysqld
+
+systemctl status mysqld
+
+grep 'temporary password' /var/log/mysqld.log
+
+mysql -uroot -p
+
+set global validate_password_policy=0;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '87654321';
