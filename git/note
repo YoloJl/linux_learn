@@ -41,4 +41,7 @@ git config --global user.email "pengzhipxz@qq.com"
 	查看分支
 		git branch
 	切换分支
-		git checkout
+		git checkout name
+	新建分支
+		git checkout -b name
+	
