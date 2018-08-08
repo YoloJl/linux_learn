@@ -227,6 +227,11 @@ map <F12> :GoDebugStart<CR>
 map <C-F12> :GoDebugStop<CR>
 map <C-S-F12> :GoDebugRestart<CR>
 map <C-F10> :GoDebugStep<CR>
+let g:go_debug_windows = {
+      \ 'stack': 'leftabove 30vnew',
+      \ 'out':   'botright 10new',
+      \ 'vars':  'leftabove 40vnew',
+\ }
 """"""""ale""""""""""""""""""""""""""
 let g:ale_sign_column_always = 1
 "
